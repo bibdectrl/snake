@@ -1,9 +1,9 @@
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class SnakeGame {
 
-    private ArrayList<Snake> snakes;
+    private LinkedList<Snake> snakes;
     private int length;
     private Direction direction;
     private boolean alive;
@@ -14,13 +14,14 @@ public class SnakeGame {
     private int snakeHeadX;
     private int snakeHeadY;
 
-    public SnakeGame(int boardHeight, int boardWidth){
+    public SnakeGame(int boardHeight, int boardWidth)
+    {
 	this.length = 1;
 	this.direction = Direction.RIGHT;
 	this.alive = true;
 	this.boardHeight = boardHeight;
 	this.boardWidth = boardWidth;
-	this.snakes = new ArrayList<Snake>();
+	this.snakes = new LinkedList<Snake>();
 	this.rng = new Random();
 	snakes.add(new Snake(rng.nextInt(boardHeight-5) + 5, rng.nextInt(boardWidth-5)+5));
 	this.food = new int[2];
@@ -28,30 +29,41 @@ public class SnakeGame {
 	this.food[1] = rng.nextInt(boardWidth-1) + 1;
     }
 
-    public boolean isAlive(){
+    public boolean isAlive()
+    {
 	return alive;
     }
-
-    public ArrayList<Snake> getSnakes() {
+    
+    public LinkedList<Snake> getSnakes() 
+    {
 	return snakes;
     }
+    
 
-    public void feedSnake(){
-	length++;
+    public void feedSnake()
+    {
+	Snake s1 = snakes.peek();
+	int newX = s1.getX();
+	int newY = s1.getY();
+	snakes.add(new Snake(newX, newY));
     }
 
-    public Direction getDirection(){
+    public Direction getDirection()
+    {
 	return direction;
     }
 
-    public void setDirection(Direction d){
+    public void setDirection(Direction d)
+    {
 	direction = d;
     }
 
-    public int getFoodX(){
+    public int getFoodX()
+    {
 	return food[0];
     }
-    public int getFoodY(){
+    public int getFoodY()
+    {
 	return food[1];
     }
 
@@ -65,8 +77,8 @@ public class SnakeGame {
 	    }
     }
 
-    public void moveSnake(int i, int j){
-	
+    public void moveSnake(int i, int j)
+    {
 	Snake s1 = snakes.get(0);
 	int newX = s1.getX() + j;
 	int newY = s1.getY() + i;
@@ -75,26 +87,21 @@ public class SnakeGame {
 	    alive = false;
 
 
-	if (newX == getFoodX() && newY == getFoodY()) {
-	    feedSnake();
-	    newFood();
-	}
+	if (newX == getFoodX() && newY == getFoodY()) 
+	    {
+		feedSnake();
+		newFood();
+	    }
 	
 	for (Snake s : snakes)
 	    {
-		if (newX == s.getX() && newY == s.getY()) {
+		if (newX == s.getX() && newY == s.getY()) 
+		    {
 			alive = false;
 		    }
 	    }
-
-	ArrayList<Snake> newSnakes = new ArrayList<Snake>();
-	Snake newSnake = new Snake(newX, newY);
-	newSnakes.add(newSnake);
-	for (Snake s : snakes.subList(0, length-1))
-	    {
-		newSnakes.add(s);
-	    }
-	snakes = newSnakes;
+	snakes.addFirst(new Snake(newX, newY));
+	snakes.removeLast();
     }
 
 }

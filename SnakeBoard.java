@@ -10,14 +10,14 @@ public class SnakeBoard extends JPanel {
     private SnakeGame snakegame;
     private Timer timer;
 
-    public SnakeBoard(int width, int height){
+    public SnakeBoard(int width, int height)
+    {
 	this.width = width;
 	this.height = height;
 	this.board = new int[height][width];
 	this.snakegame = new SnakeGame(width, height);
-	timer = new Timer(222, new ActionListener() {
-		public void actionPerformed(ActionEvent ae)
-		{
+	timer = new Timer(222, new ActionListener(){
+		public void actionPerformed(ActionEvent ae){
 		    
 		    if (! snakegame.isAlive()) {
 			snakegame = new SnakeGame(30, 30);
@@ -63,7 +63,7 @@ public class SnakeBoard extends JPanel {
 			}
 
 		}
-		public void keyReleased(KeyEvent e) {
+		public void keyReleased(KeyEvent e){
 		}
 	    });
 	this.setFocusable(true); 
